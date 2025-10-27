@@ -11,41 +11,35 @@ This is a complete implementation featuring:
 - ✅ **Custom shader DSL** - Clean, readable syntax that compiles to SPIR-V
 - ✅ **Working demo** - Renders a colorful triangle with your custom shaders
 
-## 🏗️ Project Structure
+## Demos
+The provided example shaders produce
+![Demo 1](images/demo1.png)
 
+Using these shaders
+
+```cpp
+shader fragment {
+    input vec3 fragColor;  // Receives interpolated color
+    output vec4 outColor;
+    
+    main {
+        outColor = vec4(fragColor, 1.0);  // Output the color
+    }
+}
+
+shader vertex {
+    input vec3 position;
+    input vec3 color;      // Each vertex has RGB color
+    output vec3 fragColor; // Pass color to fragment shader
+    
+    main {
+        fragColor = color;  // Pass through the color
+        gl_Position = vec4(position, 1.0);
+    }
+}
 ```
-vulkan-shader-compiler/
-├── CMakeLists.txt                    # Root build configuration
-├── compile_shaders.sh                # Compile default GLSL shaders
-├── compile_custom_shaders.sh         # Compile custom DSL shaders
-├── renderer/                         # Vulkan rendering engine (FULLY IMPLEMENTED)
-│   ├── CMakeLists.txt
-│   ├── include/
-│   │   ├── vulkan_context.h          # Vulkan initialization and device management
-│   │   ├── swapchain.h               # Swapchain and render pass management
-│   │   ├── pipeline.h                # Graphics pipeline setup
-│   │   ├── shader_loader.h           # SPIR-V shader module loading
-│   │   ├── buffer.h                  # GPU buffer management
-│   │   └── mesh.h                    # Mesh rendering
-│   └── src/                          # All renderer implementations
-├── compiler/                         # Shader compiler (FULLY IMPLEMENTED)
-│   ├── CMakeLists.txt
-│   ├── include/
-│   │   ├── shader_compiler.h         # Main compiler interface
-│   │   ├── lexer.h                   # Tokenizer
-│   │   ├── parser.h                  # AST builder
-│   │   ├── optimizer.h               # Optimization passes
-│   │   └── codegen.h                 # GLSL/SPIR-V generation
-│   └── src/                          # All compiler implementations
-├── src/
-│   ├── main.cpp                      # Main Vulkan application
-│   └── shader_compiler_tool.cpp      # CLI compiler tool
-└── shaders/
-    ├── example.vert.dsl              # Example custom vertex shader
-    ├── example.frag.dsl              # Example custom fragment shader
-    ├── shader.vert                   # Default GLSL vertex shader
-    └── shader.frag                   # Default GLSL fragment shader
-```
+produces:
+![Demo 2](images/demo2.png)
 
 ## ✨ Features
 
